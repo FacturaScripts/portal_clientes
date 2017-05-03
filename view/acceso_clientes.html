@@ -1,0 +1,237 @@
+{include="header"}
+
+<script type="text/javascript">
+   $(document).ready(function () {
+      {if="$fsc->mostrar=='buscar'"}
+         document.f_custom_search.query.focus();
+      {/if}
+   });
+</script>
+
+<div class="container-fluid" style="margin-top: 10px;">
+   <div class="page-header">
+      <h1>
+         <i class="fa fa-sitemap" aria-hidden="true"></i> Clientes del portal
+         <span class="btn-group">
+            <div class="btn-group hidden-xs">
+               <a class="btn btn-xs btn-default" href="{$fsc->url()}" title="Recargar la página">
+                  <span class="glyphicon glyphicon-refresh"></span>
+               </a>
+               {if condition="$fsc->page->is_default()"}
+               <a class="btn btn-xs btn-default active" href="{$fsc->url()}&amp;default_page=FALSE" title="Desmarcar como página de inicio">
+                  <span class="fa fa-bookmark-o"></span>
+               </a>
+               {else}
+               <a class="btn btn-xs btn-default" href="{$fsc->url()}&amp;default_page=TRUE" title="Marcar como página de inicio">
+                  <span class="fa fa-bookmark-o"></span>
+               </a>
+               {/if}
+            </div>
+         </span>
+         <span class="btn-group">
+            <div class="btn-group">
+               {loop="$fsc->extensions"}
+               {if="$value->type=='button'"}
+               <a href="index.php?page={$value->from}{$value->params}" class="btn btn-xs btn-default">{$value->text}</a>
+               {/if}
+               {/loop}
+            </div>
+         </span>
+      </h1>
+      <p class="help-block">
+         Listado de los clientes de la empresa, con y sin acceso al portal.
+      </p>
+   </div>
+</div>
+
+<div id="tab_panel_control" role="tabpanel">
+   <ul class="nav nav-tabs" role="tablist">
+      <li{if="$fsc->mostrar=='con_acceso'"} class="active"{/if}>
+         <a href="{$fsc->url()}&mostrar=con_acceso" title="Listado con acceso">
+            <i class="fa fa-user" aria-hidden="true"></i>
+            <span class="hidden-xs"> &nbsp; Con acceso</span>
+            <span class="badge">{$fsc->total_con_acceso}</span>
+         </a>
+      </li>
+      <li{if="$fsc->mostrar=='sin_acceso'"} class="active"{/if}>
+         <a href="{$fsc->url()}&mostrar=sin_acceso" title="Listado sin acceso">
+            <i class="fa fa-user-times" aria-hidden="true"></i>
+            <span class="hidden-xs"> &nbsp; Sin acceso</span>
+            <span class="badge">{$fsc->total_sin_acceso}</span>
+         </a>
+      </li>
+      <li{if="$fsc->mostrar=='buscar'"} class="active"{/if}>
+         <a href="{$fsc->url()}&mostrar=buscar" title="Buscar">
+            <span class="glyphicon glyphicon-search"></span>
+            <span class="hidden-xs"> &nbsp; Buscar</span>
+            {if="$fsc->total_busqueda!==''"}
+            <span class="hidden-xs badge">{$fsc->total_busqueda}</span>
+            {/if}
+         </a>
+      </li>
+      {loop="$fsc->extensions"}
+      {if="$value->type=='tab'"}
+      <li{if="$fsc->mostrar=='ext_'.$value->name"} class="active"{/if}>
+         <a href="{$fsc->url()}&mostrar=ext_{$value->name}">{$value->text}</a>
+      </li>
+      {/if}
+      {/loop}
+   </ul>
+
+   {if="$fsc->mostrar=='buscar'"}
+   <br/>
+   <form name="f_custom_search" id="f_custom_search" action="{$fsc->url(TRUE)}" method="post" class="form">
+      <div class="container-fluid" style="margin-top: 15px; margin-bottom: 10px;">
+         <div class="row">
+            <div class="col-sm-12">
+               <div class="input-group">
+                  <input class="form-control" type="text" id="query" name="query" value="{$fsc->query}" autocomplete="off" placeholder="Buscar">
+                  <span class="input-group-btn">
+                     <button class="btn btn-primary" type="submit">
+                        <span class="glyphicon glyphicon-search"></span>
+                     </button>
+                  </span>
+               </div>
+            </div>
+         </div>
+      </div>
+   </form>
+   {/if}
+
+   {if="in_array($fsc->mostrar, array('con_acceso','sin_acceso','buscar'))"}
+   <div class="table-responsive">
+      <table id="tabla_{$fsc->mostrar}" class="table table-hover table-striped" cellspacing="0" width="100%">
+         <thead>
+            <tr>
+               <th class="text-left">Código</th>
+               <th class="text-left">CIF/NIF</th>
+               <th class="text-left">Nombre</th>
+               <th class="text-left">Teléfono 1</th>
+               <th class="text-left">Teléfono 2</th>
+               <th class="text-left">Email</th>
+            </tr>
+         </thead>
+         <tbody>
+            {loop="$fsc->resultado"}
+            <tr class="clickable" data-toggle="modal" data-target="#cliente{$value->codcliente}">
+               <td class="text-left">
+                  <a href="{$value->url()}" title="Ver ficha del cliente {$value->codcliente}">{$value->codcliente}</a>
+               </td>
+               <td class="text-left">{$value->cifnif}</td>
+               <td class="text-left">{$value->nombre}</td>
+               <td class="text-left">{$value->telefono1}</td>
+               <td class="text-left">{$value->telefono2}</td>
+               <td class="text-left">{$value->email}</td>
+            </tr>
+            {else}
+            <tr class="warning">
+               <td colspan="6">No se ha encontrado ningún cliente.</td>
+            </tr>
+            {/loop}
+         </tbody>
+      </table>
+   </div>
+
+   <div class="container-fluid">
+      <div class="row">
+         <div class="col-sm-12 text-center">
+            <ul class="pagination">
+               {loop="$fsc->paginacion()"}
+               <li{if="$value['actual']"} class="active"{/if}>
+                  <a href="{$value['url']}">{$value['num']}</a>
+               </li>
+               {/loop}
+            </ul>
+         </div>
+      </div>
+   </div>
+   {/if}
+
+   {loop="$fsc->extensions"}
+   {if="$value->type=='tab' AND $fsc->mostrar=='ext_'.$value->name"}
+   <iframe src="index.php?page={$value->from}{$value->params}" width="100%" height="2000" frameborder="0"></iframe>
+   {/if}
+   {/loop}
+</div>
+
+{loop="$fsc->resultado"}
+<!-- Modal cliente {$value->codcliente} -->
+<form class="form" name="f_editar_cliente_{$value->codcliente}" id="f_editar_cliente_{$value->codcliente}" action="{$fsc->url()}" role="form" method="post">
+   <div class="modal fade" id="cliente{$value->codcliente}" tabindex="-1" role="dialog" aria-labelledby="modalCliente{$value->codcliente}">
+      <div class="modal-dialog" role="document">
+         <div class="modal-content">
+            <div class="modal-header">
+               <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar"><span aria-hidden="true">&times;</span></button>
+               <h4 class="modal-title" id="modalCliente{$value->codcliente}">Editar acceso de cliente (Código {$value->codcliente})</h4>
+            </div>
+            <div class="modal-body">
+               <div class="container-fluid" style="margin-top: 10px;">
+                  <div class="row">
+                     <div class="col-sm-12">
+                        <div class="row">
+                           <div class="col-sm-6">
+                              <div class="form-group">
+                                 Usuario:
+                                 <input class="form-control" type="hidden" id="codcliente" name="codcliente" value="{$value->codcliente}" />
+                                 <input class="form-control" type="text" id="codigo_cliente" name="codigo_cliente" value="{$value->cifnif}" disabled="disabled" required />
+                                 {if condition="$value->password!=''"}<p class="help-block">Introduce la contraseña 2 veces sólo si quieres cambiarla.</p>{/if}
+                              </div>
+                           </div>
+                           <div class="col-sm-6">
+                              <div class="form-group">
+                                 Contraseña:
+                                 <input class="form-control" type="text" id="password" name="password" placeholder="Nueva contraseña"{if condition="$value->password==''"}value="{$value->password}" required{/if}/>
+                                 <input class="form-control" type="text" id="repeat_password" name="repeat_password" placeholder="Repetir contraseña" {if condition="$value->password==''"}value="{$value->password}" required{/if}/>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-sm-12">
+                        Email:
+                        <input class="form-control" type="text" id="email" name="email" value="{$value->email}" required />
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-sm-12">
+                        <div class="row">
+                           <div class="col-sm-12">
+                              <p class="help-block">Los números de teléfono no son obligatorios, pero si recomendables.</p>
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-sm-6">
+                              <div class="form-group">
+                                 Telefono 1:
+                                 <input class="form-control" type="text" id="telefono1" name="telefono1" value="{$value->telefono1}" />
+                              </div>
+                           </div>
+                           <div class="col-sm-6">
+                              <div class="form-group">
+                                 Telefono 2:
+                                 <input class="form-control" type="text" id="telefono2" name="telefono2" value="{$value->telefono2}" />
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="modal-footer">
+               <button type="button" class="btn btn-default" data-dismiss="modal">
+                  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                  <span class="hidden-xs"> &nbsp; Cerrar</span>
+               </button>
+               <button type="submit" class="btn btn-sm btn-primary" title="Guardar">
+                  <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+                  <span class="hidden-xs"> &nbsp; Guardar</span>
+               </button>
+            </div>
+         </div>
+      </div>
+   </div>
+</form>
+{/loop}
+
+{include="footer"}
