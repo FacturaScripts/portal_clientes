@@ -72,7 +72,6 @@ if (!function_exists('portal_session_destroy')) {
     */
    function portal_session_destroy() {
       if (session_destroy()) {
-         var_dump("Cerrar sesion");
          header('Location: ' . FS_PATH . 'index.php');
       }
    }
