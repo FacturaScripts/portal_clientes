@@ -1,34 +1,29 @@
 
-               <div class="clearfix">&nbsp;</div>
-               <div class="clearfix">&nbsp;</div>
-               
-               <div class="mastfoot">
-                 <div class="inner">
-                     <p>
-                        <span style="padding: 0 25px;">
-                           <small>
-                              Creado con <a target="_blank" href="https://www.facturascripts.com">FacturaScripts</a>.
-                           </small>
-                        </span>
-                        
-                        <span class="hidden-xs" style="padding: 0 25px;">
-                           <small>Consultas: {$fsc->selects()}</small>
-                           <small>Transacciones: {$fsc->transactions()}</small>
-                        </span>
-                        
-                        <span style="padding: 0 25px;">
-                           <small>
-                              <i class="fa fa-clock-o" aria-hidden="true" title="Página procesada en {$fsc->duration()}"></i>
-                              &nbsp;{$fsc->duration()}
-                           </small>
-                        </span>
-                     </p>
-                  </div>
-               </div>
-               
+         </div>
+         <div class="mastfoot">
+            <div class="inner">
+               <p>
+                  <span style="padding: 0 25px;">
+                     <small>
+                        Creado con <a target="_blank" href="https://www.facturascripts.com">FacturaScripts</a>.
+                     </small>
+                  </span>
+
+                  <span class="hidden-xs" style="padding: 0 25px;">
+                     <small>Consultas: {$fsc->selects()}</small>
+                     <small>Transacciones: {$fsc->transactions()}</small>
+                  </span>
+
+                  <span style="padding: 0 25px;">
+                     <small>
+                        <i class="fa fa-clock-o" aria-hidden="true" title="Página procesada en {$fsc->duration()}"></i>
+                        &nbsp;{$fsc->duration()}
+                     </small>
+                  </span>
+               </p>
             </div>
          </div>
       </div>
-      
+
    </body>
 </html>

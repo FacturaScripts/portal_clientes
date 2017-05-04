@@ -1,0 +1,166 @@
+{include="public/header"}
+
+
+<div class="container-fluid" style="margin-top: 50px;">
+   <div class="page-header">
+      <h1>
+         <i class="fa fa-user" aria-hidden="true"></i> {$fsc->cliente->nombre}
+      </h1>
+      <p class="help-block">
+         Este es tu panel de cliente
+      </p>
+    </div>
+</div>
+<div class="container-fluid">
+   <div class="row">
+      <div class="col-sm-3 col-lg-2">
+         <ul id="tabs_cliente" class="nav nav-pills nav-stacked" role="tablist">
+            <li role="presentation" class="active">
+               <a href="#general" aria-controls="general" role="tab" data-toggle="tab">
+                  <span class="glyphicon glyphicon-dashboard"></span>
+                  <span>&nbsp; Datos generales</span>
+               </a>
+            </li>
+            {loop="$fsc->extensions"}
+               <li role="presentation">
+                  <a href="#ext_{$key}" aria-controls="ext_{$key}" role="tab" data-toggle="tab">
+                     {$value->text}
+                  </a>
+               </li>
+            {else}
+            <li>
+               <a href="#ext_empty" aria-controls="ext_empty" role="tab" data-toggle="tab">
+                  <span class="glyphicon glyphicon-alert text-danger"></span>
+                  &nbsp; Sin extensiones
+               </a>
+            </li>
+            {/loop}
+         </ul>
+      </div>
+      <div class="col-sm-9 col-lg-10">
+         <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="general">
+               <div class='panel {if="$fsc->cliente->debaja"}panel-danger{else}panel-primary{/if}'>
+                  <div class="panel-heading">
+                     <h3 class="panel-title">Datos generales</h3>
+                  </div>
+                  <div class="panel-body">
+                     <div class="row">
+                        <div class="col-sm-4">
+                           <div class="form-group">
+                              Nombre:
+                              <input class="form-control" type="text" name="nombre" value="{$fsc->cliente->nombre}" disabled />
+                           </div>
+                        </div>
+                        <div class="col-sm-4">
+                           <div class="form-group">
+                              Razón social:
+                              <input class="form-control" type="text" name="razonsocial" value="{$fsc->cliente->razonsocial}" disabled />
+                           </div>
+                        </div>
+                        <div class="col-sm-2">
+                           <div class="form-group">
+                              <br/>
+                              <select name="tipoidfiscal" class="form-control" disabled >
+                              {$tiposids=fs_tipos_id_fiscal()}
+                              {loop="$tiposids"}
+                                 {if="$value==$fsc->cliente->tipoidfiscal"}
+                                 <option value="{$value}" selected="">{$value}</option>
+                                 {else}
+                                 <option value="{$value}">{$value}</option>
+                                 {/if}
+                              {/loop}
+                              </select>
+                           </div>
+                        </div>
+                        <div class="col-sm-2">
+                           <div class="form-group">
+                              {#FS_CIFNIF#}:
+                              <input class="form-control" type="text" name="cifnif" value="{$fsc->cliente->cifnif}" maxlength="20" disabled />
+                           </div>
+                        </div>
+                     </div>
+                     <div class="row">
+                        <div class="col-sm-4">
+                           <div class="form-group">
+                              <label class="checkbox-inline">
+                                 {if="$fsc->cliente->personafisica"}
+                                 <input type="checkbox" name="personafisica" value="TRUE" checked="" disabled />
+                                 {else}
+                                 <input type="checkbox" name="personafisica" value="TRUE" disabled />
+                                 {/if}
+                                 Es una persona física (no una empresa)
+                              </label>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="row">
+                        <div class="col-sm-2">
+                           <div class="form-group">
+                              Teléfono 1:
+                              <input class="form-control" type="text" name="telefono1" value="{$fsc->cliente->telefono1}" disabled />
+                           </div>
+                        </div>
+                        <div class="col-sm-2">
+                           <div class="form-group">
+                              Teléfono 2:
+                              <input class="form-control" type="text" name="telefono2" value="{$fsc->cliente->telefono2}" disabled />
+                           </div>
+                        </div>
+                        <div class="col-sm-2">
+                           <div class="form-group">
+                              Fax:
+                              <input class="form-control" type="text" name="fax" value="{$fsc->cliente->fax}" disabled />
+                           </div>
+                        </div>
+                        <div class="col-sm-3">
+                           <div class="form-group">
+                              Email:
+                              <input class="form-control" type="text" name="email" value="{$fsc->cliente->email}" disabled />
+                           </div>
+                        </div>
+                        <div class="col-sm-3">
+                           <div class="form-group">
+                              Web:
+                              <input class="form-control" type="text" name="web" value="{$fsc->cliente->web}" disabled />
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="panel-footer text-left">
+                     <p><small>Fecha de alta: {$fsc->cliente->fechaalta}</small></p>
+                     <p>Si necesitas cambiar algún dato, ponte en contacto con nosotros.</p>
+                  </div>
+               </div>
+            </div>
+            {loop="$fsc->extensions"}
+               {if="$value->type=='tab'"}
+               <div role="tabpanel" class="tab-pane" id="ext_{$key}">
+                  <iframe src="index.php?page={$value->from}{$value->params}&cod={$fsc->cliente->codcliente}" width="100%" height="2000" frameborder="0"></iframe>
+               </div>
+               {/if}
+            {else}
+               <div role="tabpanel" class="tab-pane" id="ext_empty">
+                  <div class='panel panel-primary'>
+                     <div class="panel-heading">
+                        <h3 class="panel-title">Sin extensiones</h3>
+                     </div>
+                     <div class="panel-body">
+                        <div class="row">
+                           <div class="col-sm-12">
+                              Las extensiones son formas de dar un valor añadido al panel de cliente con todo lo que tu empresa este interesada en ofrecerle a los clientes.
+                           </div>
+                       </div>
+                     </div>
+                  </div>
+            </div>
+            {/loop}
+         </div>
+      </div>
+   </div>
+</div>
+
+<div class="clearfix">&nbsp;</div>
+<div class="clearfix">&nbsp;</div>
+
+{include="public/footer"}

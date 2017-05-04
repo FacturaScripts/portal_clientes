@@ -4,9 +4,11 @@
 
 /* Links */
 a,
-a:focus,
-a:hover {
+a:focus {
    color: #fff;
+}
+a:hover {
+   color: #000;
 }
 
 /* Custom default button */
@@ -31,7 +33,7 @@ body {
 }
 body {
    color: #fff;
-   text-align: center;
+   text-align: left;
    text-shadow: 0 1px 3px rgba(0,0,0,.5);
 }
 
@@ -125,6 +127,7 @@ body {
 .mastfoot {
    color: #999; /* IE8 proofing */
    color: rgba(255,255,255,.5);
+   text-align: center;
 }
 
 
@@ -145,6 +148,7 @@ body {
    /* Start the vertical centering */
    .site-wrapper-inner {
       vertical-align: middle;
+      text-align: center;
    }
    /* Handle the widths */
    .masthead,
@@ -162,6 +166,11 @@ body {
    }
 }
 
+.panel-body,
 .well {
    background-color: #545454;
+}
+
+.panel-footer {
+   background-color: #474747;
 }

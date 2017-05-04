@@ -1,72 +1,36 @@
-
-    <div class="site-wrapper">
-
-      <div class="site-wrapper-inner">
-
-         <div class="cover-container">
-
-            <div class="masthead clearfix">
-               <div class="inner">
-                  <h3 class="masthead-brand">{if="$fsc->empresa->nombrecorto"}{$fsc->empresa->nombrecorto}{else}{$fsc->empresa->nombre}{/if}</h3>
-                  <nav>
-                     <ul class="nav masthead-nav">
-                        <li{if="$fsc->page->name=='portada'"} class="active"{/if}>
-                           <a href="{#FS_PATH#}index.php">Home</a>
-                        </li>
-                        <li{if="$fsc->page->name=='contacto'"} class="active"{/if}>
-                           <a href="{#FS_PATH#}index.php?page=contacto">Contacto</a>
-                        </li>
-                        <li{if="$fsc->page->name=='acceso_clientes'"} class="active"{/if}>
-                           <a href="{#FS_PATH#}index.php?page=acceso_clientes">Acceso clientes</a>
-                        </li>
-                        <li>
-                           <a href="{#FS_PATH#}index.php?page">Acceso empleados</a>
-                        </li>
-                        <li>
-                           <a target="_blank" href="https://www.facturascripts.com/plugin/woocommerce">Woocomerce</a>
-                        </li>
-                        <li>
-                           <a target="_blank" href="https://www.facturascripts.com/plugin/prestashop_micro">Prestashop</a>
-                        </li>
-                     </ul>
-                  </nav>
-               </div>
-            </div>
-            
-            
-            {if="$fsc->get_errors()"}
-            <div class="row">
-               <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1">
-                  <div class="alert alert-danger alert-dismissible hidden-print" role="alert">
-                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                     </button>
-                     <ul>{loop="$fsc->get_errors()"}<li>{$value}</li>{/loop}</ul>
-                  </div>
-               </div>
-            </div>
+<div class="masthead clearfix">
+   <div class="inner">
+      <h3 class="masthead-brand">{if="$fsc->empresa->nombrecorto"}{$fsc->empresa->nombrecorto}{else}{$fsc->empresa->nombre}{/if}</h3>
+      <nav>
+         <ul class="nav masthead-nav">
+            <li{if="$fsc->page->name=='portada'"} class="active"{/if}>
+               <a href="{#FS_PATH#}index.php">Home</a>
+            </li>
+            <li{if="$fsc->page->name=='contacto'"} class="active"{/if}>
+               <a href="{#FS_PATH#}index.php?page=contacto">Contacto</a>
+            </li>
+            {$session_exists=portal_session_exists()}
+            {if="$session_exists"}
+            <li{if="$fsc->page->name=='acceso_clientes'"} class="active"{/if}>
+               <a href="{#FS_PATH#}index.php?page=acceso_clientes&exit=true">Cerrar sessión</a>
+            </li>
+            {else}
+            <li{if="$fsc->page->name=='acceso_clientes'"} class="active"{/if}>
+               <a href="{#FS_PATH#}index.php?page=acceso_clientes">Acceso clientes</a>
+            </li>
+            <li>
+               <a href="{#FS_PATH#}index.php?page">Acceso empleados</a>
+            </li>
             {/if}
-            {if="$fsc->get_messages()"}
-            <div class="row">
-               <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1">
-                  <div class="alert alert-success alert-dismissible hidden-print" role="alert">
-                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                     </button>
-                     <ul>{loop="$fsc->get_messages()"}<li>{$value}</li>{/loop}</ul>
-                  </div>
-               </div>
-            </div>
-            {/if}
-            {if="$fsc->get_advices()"}
-            <div class="row">
-               <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1">
-                  <div class="alert alert-info alert-dismissible hidden-print" role="alert">
-                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                     </button>
-                     <ul>{loop="$fsc->get_advices()"}<li>{$value}</li>{/loop}</ul>
-                  </div>
-               </div>
-            </div>
-            {/if}
+            <!-- INICIO Promoción plugins relacionados -->
+            <li>
+               <a target="_blank" href="https://www.facturascripts.com/plugin/woocommerce">Woocomerce</a>
+            </li>
+            <li>
+               <a target="_blank" href="https://www.facturascripts.com/plugin/prestashop_micro">Prestashop</a>
+            </li>
+            <!-- FIN Promoción plugins relacionados -->
+         </ul>
+      </nav>
+   </div>
+</div>

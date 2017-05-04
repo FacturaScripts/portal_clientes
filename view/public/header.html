@@ -28,4 +28,46 @@
       {/loop}
    </head>
    <body>
+
+      <div class="site-wrapper">
          {include="public/nav_menu"}
+         <div class="site-wrapper">
+
+               <div class="cover-container">
+                  {if="$fsc->get_errors()"}
+                  <div class="row">
+                     <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1">
+                        <div class="alert alert-danger alert-dismissible hidden-print" role="alert">
+                           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                           </button>
+                           <ul>{loop="$fsc->get_errors()"}<li>{$value}</li>{/loop}</ul>
+                        </div>
+                     </div>
+                  </div>
+                  {/if}
+                  {if="$fsc->get_messages()"}
+                  <div class="row">
+                     <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1">
+                        <div class="alert alert-success alert-dismissible hidden-print" role="alert">
+                           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                           </button>
+                           <ul>{loop="$fsc->get_messages()"}<li>{$value}</li>{/loop}</ul>
+                        </div>
+                     </div>
+                  </div>
+                  {/if}
+                  {if="$fsc->get_advices()"}
+                  <div class="row">
+                     <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1">
+                        <div class="alert alert-info alert-dismissible hidden-print" role="alert">
+                           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                           </button>
+                           <ul>{loop="$fsc->get_advices()"}<li>{$value}</li>{/loop}</ul>
+                        </div>
+                     </div>
+                  </div>
+                  {/if}
+               </div>

@@ -36,6 +36,7 @@ class acceso_clientes extends fs_controller {
    public $total_busqueda;
    public $query;
    public $page_description;
+   public $username;
 
    /**
     * Constructor del controlador
@@ -50,23 +51,34 @@ class acceso_clientes extends fs_controller {
     * Código que se ejecutará en la parte pública
     */
    protected function public_core() {
-      $this->template = 'public/login_clientes';
-      $cliente = new \cliente();
+      start_portal_session();
 
+      if (filter_input(INPUT_GET, 'exit')) {
+         portal_session_destroy();
+      }
+
+      $this->template = 'public/login_clientes';
+      $this->username = '';
+      $cliente = new \cliente();
       $cifnif = filter_input(INPUT_POST, 'username');
-      $this->cliente = $cliente->get_by_cifnif($cifnif);
-      if ($this->cliente) {
-         $password = filter_input(INPUT_POST, 'password');
-         if (password_verify($password, $this->cliente->password)) {
-            $this->new_message('Usuario identificado correctamente');
-            // TODO: Guardar login y enviar al cliente a otra página o mostrarle datos
+      if ($cifnif) {
+         $this->username = $cifnif;
+         $this->cliente = $cliente->get_by_cifnif($cifnif);
+         if ($this->cliente) {
+            $password = filter_input(INPUT_POST, 'password');
+            if (password_verify($password, $this->cliente->password)) {
+               $this->new_message('Usuario identificado correctamente');
+               // TODO: Guardar login y enviar al cliente a otra página o mostrarle datos
+               $_SESSION['login_user'] = $this->cliente->cifnif;
+               header('Location: ' . FS_PATH . 'index.php?page=panel_cliente');
+            } else {
+               /* Por razones de seguridad no merece la pena indicar que es la contraseña lo que está mal */
+               $this->new_error_msg('Usuario y/o contraseña incorrectos.');
+            }
          } else {
-            /* Por razones de seguridad no merece la pena indicar que es la contraseña lo que está mal */
+            /* Por razones de seguridad no merece la pena indicar que es el usuario que no existe */
             $this->new_error_msg('Usuario y/o contraseña incorrectos.');
          }
-      } else {
-         /* Por razones de seguridad no merece la pena indicar que es el usuario que no existe */
-         $this->new_error_msg('Usuario y/o contraseña incorrectos.');
       }
    }
 

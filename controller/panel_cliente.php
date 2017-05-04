@@ -17,24 +17,28 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+require_model('cliente.php');
 
-class portada extends fs_controller {
+class panel_cliente extends fs_controller {
 
    public $page_description;
+   public $cliente;
 
    public function __construct() {
-      parent::__construct(__CLASS__, 'Portada', 'Portal', FALSE, FALSE);
+      parent::__construct(__CLASS__, 'Panel de cliente', 'Portal', FALSE, FALSE);
       /* Usado para el meta description */
-      $this->page_description = 'Página principal de la empresa';
+      $this->page_description = 'Página privada de cliente';
    }
 
    /**
     * Código que se ejecutará en la parte pública
     */
    protected function public_core() {
-      start_portal_session();
+      check_portal_session();
       
-      $this->template = 'public/portada';
+      $this->template = 'public/panel_cliente';
+      $cliente = new \cliente();
+      $this->cliente = $cliente->get_by_cifnif($_SESSION['login_user']);
    }
 
 }
