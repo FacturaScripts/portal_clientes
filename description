@@ -1,5 +1,9 @@
-* Permite a un usuario cliente acceder mediante CIF/NIF y contraseña.
-* Permite ver las facturas en HTML.
+Página para gestionar el acceso a clientes a un portal público.<br/>
+
+<ul>
+   <li>Permite a un usuario cliente acceder mediante CIF/NIF y contraseña.</li>
+   <li>Permite ver las facturas en HTML.</li>
+</ul>
 
 <br/>
-<b>Accesible desde</b>: 
+<b>Accesible desde</b>: Portal -> Acceso clientes

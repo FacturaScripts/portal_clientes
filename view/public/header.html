@@ -21,6 +21,24 @@
       <script type="text/javascript" src="{#FS_PATH#}view/js/bootbox.min.js"></script>
       <script type="text/javascript">
          bootbox.setLocale("es");
+         
+         function show_precio(precio, coddivisa) {
+            coddivisa || ( coddivisa = '{$fsc->empresa->coddivisa}' );
+         
+            if(coddivisa == '{$fsc->empresa->coddivisa}') {
+               {if="FS_POS_DIVISA=='right'"}
+               return number_format(precio, {#FS_NF0#}, '{#FS_NF1#}', '{#FS_NF2#}')+' {$fsc->simbolo_divisa()}';
+               {else}
+               return '{$fsc->simbolo_divisa()}'+number_format(precio, {#FS_NF0#}, '{#FS_NF1#}', '{#FS_NF2#}');
+               {/if}
+            } else {
+               return number_format(precio, {#FS_NF0#}, '{#FS_NF1#}', '{#FS_NF2#}');
+            }
+         }
+
+         function show_numero(numero) {
+            return number_format(numero, {#FS_NF0#}, '{#FS_NF1#}', '{#FS_NF2#}');
+         }
       </script>
       {loop="$fsc->extensions"}
       {if="$value->type=='head'"}{$value->text}{/if}

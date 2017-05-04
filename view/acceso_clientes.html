@@ -31,7 +31,7 @@
          <span class="btn-group">
             <div class="btn-group">
                {loop="$fsc->extensions"}
-               {if="$value->type=='button'"}
+               {if="$value->type=='public_button'"}
                <a href="index.php?page={$value->from}{$value->params}" class="btn btn-xs btn-default">{$value->text}</a>
                {/if}
                {/loop}
@@ -70,7 +70,7 @@
          </a>
       </li>
       {loop="$fsc->extensions"}
-      {if="$value->type=='tab'"}
+      {if="$value->type=='public_tab'"}
       <li{if="$fsc->mostrar=='ext_'.$value->name"} class="active"{/if}>
          <a href="{$fsc->url()}&mostrar=ext_{$value->name}">{$value->text}</a>
       </li>
@@ -148,7 +148,7 @@
    {/if}
 
    {loop="$fsc->extensions"}
-   {if="$value->type=='tab' AND $fsc->mostrar=='ext_'.$value->name"}
+   {if="$value->type=='public_tab' AND $fsc->mostrar=='ext_'.$value->name"}
    <iframe src="index.php?page={$value->from}{$value->params}" width="100%" height="2000" frameborder="0"></iframe>
    {/if}
    {/loop}
