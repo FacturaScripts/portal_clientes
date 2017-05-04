@@ -26,11 +26,15 @@
                         <div class="col-sm-5">
                            <div class="thumbnail hidden-xs">
                               {if="file_exists(FS_MYDOCS.'images/logo.png')"}
-                              <img src="images/logo.png" alt="{$fsc->empresa->nombre}"/>
+                              <img src="{#FS_MYDOCS#}images/logo.png" alt="{$fsc->empresa->nombre}"/>
                               {elseif="file_exists(FS_MYDOCS.'images/logo.jpg')"}
-                              <img src="images/logo.jpg" alt="{$fsc->empresa->nombre}"/>
+                              <img src="{#FS_MYDOCS#}images/logo.jpg" alt="{$fsc->empresa->nombre}"/>
+                              {elseif="file_exists(FS_MYDOCS.'images/logo.jpg')"}
+                              <img src="{#FS_MYDOCS#}images/logo.jpg" alt="{$fsc->empresa->nombre}"/>
+                              {elseif="file_exists(FS_PATH.'plugins/login_anonimo/view/img/logo.png')"}
+                              <img src="{#FS_PATH#}plugins/login_anonimo/view/img/logo.png" alt="login"/>
                               {else}
-                              <img src="plugins/login_anonimo/view/img/logo.png" alt="login"/>
+                              <img src="{#FS_PATH#}view/img/logo.png" alt="logo"/>
                               {/if}
                            </div>
                         </div>
