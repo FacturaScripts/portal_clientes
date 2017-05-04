@@ -27,9 +27,11 @@ if (!function_exists('start_portal_session')) {
     */
    function start_portal_session() {
       session_start();
+/*
       if (isset($_SESSION['login_user'])) {
          header('Location: ' . FS_PATH . 'index.php?page=panel_cliente');
       }
+  */
    }
 
 }

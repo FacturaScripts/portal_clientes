@@ -32,6 +32,8 @@ class contacto extends fs_controller {
     * Código que se ejecutará en la parte pública
     */
    protected function public_core() {
+      start_portal_session();
+      
       $this->template = 'public/contacto';
    }
 
