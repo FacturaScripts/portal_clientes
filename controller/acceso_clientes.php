@@ -24,6 +24,7 @@
  * @author Francesc Pineda Segarra <francesc.pineda@x-netditigal.com>
  */
 require_model('cliente.php');
+require_once FS_PATH . 'plugins/portal_clientes/vendor/ircmaxell/password-compat/password.php';
 
 class acceso_clientes extends fs_controller {
 

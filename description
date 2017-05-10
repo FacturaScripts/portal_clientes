@@ -6,4 +6,5 @@ Página para gestionar el acceso a clientes a un portal público.<br/>
 </ul>
 
 <br/>
-<b>Accesible desde</b>: Portal -> Acceso clientes
+<b>Accesible desde</b>: Portal -> Acceso clientes<br/>
+<b>Utiliza</b>: https://github.com/ircmaxell/password_compat

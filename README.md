@@ -4,3 +4,5 @@
 * Permite ver las facturas en HTML.
 
 https://www.facturascripts.com/plugin/portal_clientes
+
+Utiliza: https://github.com/ircmaxell/password_compat
