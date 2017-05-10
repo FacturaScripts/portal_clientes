@@ -21,7 +21,7 @@
 
 if (file_exists(FS_PATH . 'plugins/facturacion_base/model/core/cliente.php')) {
    require_once FS_PATH . 'plugins/facturacion_base/model/core/cliente.php';
-   require_once FS_PATH . 'plugins/portal_clientes/vendor/ircmaxell/password-compat/password.php';
+   require_once FS_PATH . 'plugins/portal_clientes/vendor/ircmaxell/password-compat/lib/password.php';
 
    /**
     * El cliente necesita una contraseña para accecder al portal_clientes
