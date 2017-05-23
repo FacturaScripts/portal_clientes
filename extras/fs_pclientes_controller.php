@@ -60,18 +60,35 @@ class fs_pclientes_controller extends fs_controller {
     * Código que se ejecutará en la parte pública
     */
    protected function public_core() {
+      session_start();
+      $cliente = new cliente();
+
       if (filter_input(INPUT_GET, 'exit')) {
-         // Si el cliente ha pulsado en cerrar sesión, destruimos la sesión
-         if($this->check_portal_session()) {
-            $this->portal_session_destroy();
+         $this->cliente = $cliente->get($_SESSION['login_cliente']);
+         $this->cliente->logout();
+         $this->cliente = FALSE;
+         $this->redirect("pclientes_portada");
+      } else if (filter_input(INPUT_POST, 'username') && filter_input(INPUT_POST, 'password')) {
+         // Si se reciben los datos para iniciar sesión
+         $username = filter_input(INPUT_POST, 'username');
+         $password = filter_input(INPUT_POST, 'password');
+         if (!$password) {
+            $this->new_error_msg('El nombre de usuario no puede estar vacío.');
+         } else if (!$password) {
+            $this->new_error_msg('La contraseña no puede estar vacía.');
+         } else {
+            // Sino nos falta ningñún dato, probamos a logear al cliente
+            if ($cliente->login($username, $password)) {
+               $this->cliente = $cliente;
+               $this->redirect("pclientes_panel");
+            } else {
+               $this->cliente = FALSE;
+               $this->new_error_msg('Usuario y/o contraseña incorrectos.');
+            }
          }
-      } else if (!$this->login_cliente()) {
-         // Si no tenemos a un cliente logeado, lo enviamos a logearse
-         //header('Location: ' . FS_PATH . 'index.php?page=pclientes_login');
-         $this->template = 'public/pclientes_login';
-      } else {
-         // Si ya está logeado lo enviamos al panel de cliente
-         header('Location: ' . FS_PATH . 'index.php?page=pclientes_panel');
+      } else if (isset($_SESSION['login_cliente'])) {
+         // Si existe sesión
+         $this->cliente = $cliente->get($_SESSION['login_cliente']);
       }
    }
 
@@ -83,86 +100,8 @@ class fs_pclientes_controller extends fs_controller {
       $this->allow_delete = $this->user->allow_delete_on($this->controller_name);
    }
 
-   /**
-    * Si se obtiene el $_POST o se encuentra la sesión se debe asignar a la 
-    * propiedad cliente de la clase el cliente que ha hecho login. Si los datos 
-    * son correctos. Así podemos saber que se ha hecho login porque cliente es 
-    * distinto de FALSE.
-    */
-   private function login_cliente() {
-      $this->cliente = FALSE;
-      
-      if ($this->portal_session_exists()) {
-         // Si ya está logeado
-         $this->start_portal_session();
-         $cliente = new cliente();
-         $cliente = $cliente->get_by_cifnif($_SESSION['login_cliente']);
-         if ($cliente) {
-            $this->cliente = $cliente;
-         }
-         return $this->cliente;
-      } else {
-         // Si no está logeado
-         $cifnif = filter_input(INPUT_POST, 'username');
-         if ($cifnif) {
-            // Si envia por post el login
-            $cliente = new cliente();
-            $cliente = $cliente->get_by_cifnif($cifnif);
-            if ($cliente) {
-               // Si el cliente existe
-               $password = filter_input(INPUT_POST, 'password');
-               if (password_verify($password, $cliente->password)) {
-                  // Si la contraseña coincide
-                  $this->start_portal_session();
-                  $_SESSION['login_cliente'] = $cliente->cifnif;
-                  $this->cliente = $cliente;
-               }
-            }
-         }
-         return $this->cliente;
-         ;
-      }
-   }
-
-// Sesiones basadas en: https://www.formget.com/login-form-in-php/
-
-   /**
-    * Inicia la sesión de cliente con acceso al portal
-    */
-   private function start_portal_session() {
-      session_start();
-      // USar cookies si es necesario
-   }
-
-   /**
-    * Comprueba si hay sesión de cliente y sino envía a la portada
-    */
-   private function check_portal_session() {
-      session_start();
-      // USar cookies si es necesario
-      if (!isset($_SESSION['login_cliente'])) {
-         header('Location: ' . FS_PATH . 'index.php');
-      }
-   }
-
-   /**
-    * Comprueba si existe la sesión de cliente
-    */
-   private function portal_session_exists() {
-      if (!isset($_SESSION['login_cliente'])) {
-         return FALSE;
-      } else {
-         return TRUE;
-      }
-   }
-
-   /**
-    * Cierra la sesión de cliente
-    */
-   private function portal_session_destroy() {
-      if (session_destroy()) {
-         header('Location: ' . FS_PATH . 'index.php');
-      }
+   public function redirect($url) {
+      header('Location: ' . FS_PATH . 'index.php?page=' . $url);
    }
 
 }

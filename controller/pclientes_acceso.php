@@ -53,12 +53,9 @@ class pclientes_acceso extends fs_pclientes_controller {
     * Código que se ejecutará en la parte pública
     */
    protected function public_core() {
-      // Requiere login
       parent::public_core();
-      
-      if (filter_input(INPUT_GET, 'exit')) {
-         header('Location: ' . FS_PATH . 'index.php?page=pclientes_portada');
-      }
+
+      $this->template = "public/pclientes_login";
    }
 
    /**
@@ -90,7 +87,7 @@ class pclientes_acceso extends fs_pclientes_controller {
                   if ($cliente->save()) {
                      $this->new_message('Se ha actualizado el cliente correctamente.');
                      if (!empty($password)) {
-                        $this->new_advice('Los datos de acceso son:<br><b>Usuario:</b> ' . $cliente->cifnif . '<br><b>Contraseña:</b> ' . $password);
+                        $this->new_advice('Los datos de acceso son:<br><b>Usuario:</b> ' . $cliente->codcliente . '<br><b>Contraseña:</b> ' . $password);
                      }
                   } else {
                      $this->new_error_msg('Ha ocurrido un error guardando el cliente.');
@@ -104,7 +101,7 @@ class pclientes_acceso extends fs_pclientes_controller {
                      if ($cliente->save()) {
                         $this->new_message('Se ha actualizado el cliente correctamente.');
                         if (!empty($password)) {
-                           $this->new_advice('Los datos de acceso son:<br><b>Usuario:</b> ' . $cliente->cifnif . '<br><b>Contraseña:</b> ' . $password);
+                           $this->new_advice('Los datos de acceso son:<br><b>Usuario:</b> ' . $cliente->codcliente . '<br><b>Contraseña:</b> ' . $password);
                         }
                      } else {
                         $this->new_error_msg('Ha ocurrido un error guardando el cliente.');

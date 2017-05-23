@@ -203,6 +203,39 @@ if (file_exists(FS_PATH . 'plugins/facturacion_base/model/core/cliente.php')) {
          }
       }
 
+      public function login($username, $password) {
+         // Si envia por post el login
+         $cliente = $this->get($username);
+         if ($cliente) {
+            // Si el cliente existe
+            if (password_verify($password, $cliente->password)) {
+               // Si la contraseña coincide
+               $_SESSION['login_cliente'] = $cliente->codcliente;
+               return true;
+            } else {
+               // La contraseña no coincide
+               return false;
+            }
+         } else {
+            // El usuario no existe
+            return false;
+         }
+      }
+
+      public function is_loggedin() {
+         if (isset($_SESSION['username'])) {
+            return true;
+         } else {
+            return false;
+         }
+      }
+
+      public function logout() {
+         session_destroy();
+         unset($_SESSION['user_session']);
+         return true;
+      }
+
    }
 
 }

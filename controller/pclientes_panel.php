@@ -24,7 +24,6 @@ require_once 'plugins/portal_clientes/extras/fs_pclientes_controller.php';
 class pclientes_panel extends fs_pclientes_controller {
 
    public $page_description;
-   public $cliente;
 
    public function __construct() {
       parent::__construct(__CLASS__, 'Panel de cliente', 'Portal', FALSE, FALSE);
@@ -36,12 +35,9 @@ class pclientes_panel extends fs_pclientes_controller {
     * Código que se ejecutará en la parte pública
     */
    protected function public_core() {
-      // Requiere login
       parent::public_core();
 
       $this->template = 'public/pclientes_panel';
-      $cliente = new \cliente();
-      $this->cliente = $cliente->get_by_cifnif($_SESSION['login_cliente']);
    }
 
 }
