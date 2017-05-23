@@ -85,7 +85,10 @@ class pclientes_ver_facturas extends fs_pclientes_controller {
          $fsext->save();
       }
    }
-
+   
+   /**
+    * Genera la factura en formato HTML
+    */
    private function generar_html() {
       $basePath = FS_PATH . 'plugins/portal_clientes/plantillas/';
       $templateName = "factura_venta";

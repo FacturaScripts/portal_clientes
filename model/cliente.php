@@ -202,7 +202,15 @@ if (file_exists(FS_PATH . 'plugins/facturacion_base/model/core/cliente.php')) {
             return 0;
          }
       }
-
+      
+      /**
+       * Si la relación usuario-contraseña es correcta devuelve true,
+       * sino false
+       * 
+       * @param type $username
+       * @param type $password
+       * @return boolean
+       */
       public function login($username, $password) {
          // Si envia por post el login
          $cliente = $this->get($username);
@@ -221,18 +229,29 @@ if (file_exists(FS_PATH . 'plugins/facturacion_base/model/core/cliente.php')) {
             return false;
          }
       }
-
+      
+      /**
+       * Si existe la variable de sesión devuelve true,
+       * sino false
+       * 
+       * @return boolean
+       */
       public function is_loggedin() {
-         if (isset($_SESSION['username'])) {
+         if (isset($_SESSION['login_cliente'])) {
             return true;
          } else {
             return false;
          }
       }
-
+      
+      /**
+       * Destruye la variable de sesión
+       * 
+       * @return boolean
+       */
       public function logout() {
          session_destroy();
-         unset($_SESSION['user_session']);
+         unset($_SESSION['login_cliente']);
          return true;
       }
 

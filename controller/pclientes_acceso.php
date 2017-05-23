@@ -177,7 +177,12 @@ class pclientes_acceso extends fs_pclientes_controller {
    public function count($array) {
       return count($array);
    }
-
+   
+   /**
+    * Devuelve la paginación
+    * 
+    * @return type
+    */
    public function paginacion() {
       $url = $this->url(TRUE);
       $paginas = array();

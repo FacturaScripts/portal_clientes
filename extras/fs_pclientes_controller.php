@@ -100,6 +100,11 @@ class fs_pclientes_controller extends fs_controller {
       $this->allow_delete = $this->user->allow_delete_on($this->controller_name);
    }
 
+   /**
+    * Función apra redirigir a un controlador concreto
+    * 
+    * @param type $url
+    */
    public function redirect($url) {
       header('Location: ' . FS_PATH . 'index.php?page=' . $url);
    }
