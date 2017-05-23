@@ -35,6 +35,10 @@ class pclientes_ver_facturas extends fs_pclientes_controller {
    protected function public_core() {
       parent::public_core();
 
+      if (!$this->cliente || !$this->cliente->is_loggedin()) {
+         $this->redirect('pclientes_acceso');
+      }
+      
       $this->resultado = FALSE;
       $this->template = FALSE;
 
@@ -53,7 +57,7 @@ class pclientes_ver_facturas extends fs_pclientes_controller {
             $this->new_error_msg('No puedes ver las facturas de otro cliente.');
          }
       } else {
-         $this->new_error_msg('No puedes acceder a esta página directamente.');
+         $this->redirect('pclientes_panel');
       }
    }
 

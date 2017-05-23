@@ -55,7 +55,11 @@ class pclientes_acceso extends fs_pclientes_controller {
    protected function public_core() {
       parent::public_core();
 
-      $this->template = "public/pclientes_login";
+      if (!$this->cliente || !$this->cliente->is_loggedin()) {
+         $this->template = "public/pclientes_login";
+      } else {
+         $this->redirect('pclientes_panel');
+      }
    }
 
    /**
