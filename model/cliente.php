@@ -91,7 +91,7 @@ if (file_exists(FS_PATH . 'plugins/facturacion_base/model/core/cliente.php')) {
             $this->password = $this->hash_password($password);
             return TRUE;
          } else {
-            $this->new_error_msg('La contraseña debe contener entre 5 y 32 caracteres para el usuario con código ' . $this->codcliente . ' <a href="index.php?page=acceso_clientes&query=' . $this->codcliente . '">Reintentar</a>.');
+            $this->new_error_msg('La contraseña debe contener entre 5 y 32 caracteres para el usuario con código ' . $this->codcliente . ' <a href="index.php?page=pclientes_acceso&query=' . $this->codcliente . '">Reintentar</a>.');
             return FALSE;
          }
       }

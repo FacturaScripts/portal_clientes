@@ -36,11 +36,12 @@ class pclientes_panel extends fs_pclientes_controller {
     * Código que se ejecutará en la parte pública
     */
    protected function public_core() {
-      check_portal_session();
+      // Requiere login
+      parent::public_core();
 
       $this->template = 'public/pclientes_panel';
       $cliente = new \cliente();
-      $this->cliente = $cliente->get_by_cifnif($_SESSION['login_user']);
+      $this->cliente = $cliente->get_by_cifnif($_SESSION['login_cliente']);
    }
 
 }

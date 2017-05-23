@@ -34,8 +34,7 @@ class pclientes_contacto extends fs_pclientes_controller {
     * Código que se ejecutará en la parte pública
     */
    protected function public_core() {
-      start_portal_session();
-      
+      // No requiere login
       $this->template = 'public/pclientes_contacto';
    }
 

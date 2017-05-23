@@ -34,8 +34,7 @@ class pclientes_portada extends fs_pclientes_controller {
     * Código que se ejecutará en la parte pública
     */
    protected function public_core() {
-      parent::public_core();
-
+      // No requiere login
       $this->template = 'public/pclientes_portada';
    }
 

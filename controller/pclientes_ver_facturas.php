@@ -33,7 +33,8 @@ class pclientes_ver_facturas extends fs_pclientes_controller {
     * Código que se ejecutará en la parte publica
     */
    protected function public_core() {
-      check_portal_session();
+      // Requiere login
+      parent::public_core();
 
       $this->resultado = FALSE;
       $this->template = FALSE;
@@ -44,7 +45,7 @@ class pclientes_ver_facturas extends fs_pclientes_controller {
          $this->template = 'extensions/pclientes_facturas_venta_html';
 
          $cliente = new \cliente();
-         $this->cliente = $cliente->get_by_cifnif($_SESSION['login_user']);
+         $this->cliente = $cliente->get_by_cifnif($_SESSION['login_cliente']);
 
          if (filter_input(INPUT_GET, 'cod') == $this->cliente->codcliente) {
             $fac0 = new factura_cliente();

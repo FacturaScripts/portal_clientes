@@ -15,11 +15,11 @@
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                <ul class="nav navbar-nav">
-                  <li{if="$fsc->page->name=='portada'"} class="active"{/if}>
+                  <li{if="$fsc->page->name=='pclientes_portada'"} class="active"{/if}>
                      <a href="{#FS_PATH#}index.php">Home</a>
                   </li>
-                  <li{if="$fsc->page->name=='contacto'"} class="active"{/if}>
-                     <a href="{#FS_PATH#}index.php?page=contacto">Contacto</a>
+                  <li{if="$fsc->page->name=='pclientes_contacto'"} class="active"{/if}>
+                     <a href="{#FS_PATH#}index.php?page=pclientes_contacto">Contacto</a>
                   </li>
                   <!-- INICIO Promoción plugins relacionados -->
                   <li>
@@ -30,8 +30,7 @@
                   </li>
                   <!-- FIN Promoción plugins relacionados -->
                </ul>
-               {$session_exists=portal_session_exists()}
-               {if="$session_exists"}
+               {if="$fsc->cliente"}
                <ul class="nav navbar-nav navbar-right">
                   <li class="dropdown">
                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Mi cuenta">
@@ -40,21 +39,21 @@
                      </a>
                      <ul class="dropdown-menu">
                         <li>
-                           <a href="index.php?page=panel_cliente">
+                           <a href="index.php?page=pclientes_panel">
                               Portada
                            </a>
                         </li>
                         <li class="divider"></li>
                         <li>
-                           <a href="{#FS_PATH#}index.php?page=acceso_clientes&exit=true">Cerrar sessión</a>
+                           <a href="{#FS_PATH#}index.php?page=pclientes_acceso&exit=true">Cerrar sessión</a>
                         </li>
                      </ul>
                   </li>
                </ul>
                {else}
                <ul class="nav navbar-nav navbar-right">
-                  <li{if="$fsc->page->name=='acceso_clientes'"} class="active"{/if}>
-                     <a href="{#FS_PATH#}index.php?page=acceso_clientes">Acceso clientes</a>
+                  <li{if="$fsc->page->name=='pclientes_acceso'"} class="active"{/if}>
+                     <a href="{#FS_PATH#}index.php?page=pclientes_acceso">Acceso clientes</a>
                   </li>
                   <li>
                      <a href="{#FS_PATH#}index.php?page">Acceso empleados</a>
