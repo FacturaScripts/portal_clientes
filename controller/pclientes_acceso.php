@@ -24,9 +24,11 @@
  * @author Francesc Pineda Segarra <francesc.pineda@x-netditigal.com>
  */
 require_model('cliente.php');
-require_once FS_PATH . 'plugins/portal_clientes/vendor/ircmaxell/password-compat/lib/password.php';
 
-class acceso_clientes extends fs_controller {
+require_once FS_PATH . 'plugins/portal_clientes/vendor/ircmaxell/password-compat/lib/password.php';
+require_once 'plugins/portal_clientes/extras/fs_pclientes_controller.php';
+
+class pclientes_acceso extends fs_pclientes_controller {
 
    public $cliente;
    public $mostrar;
@@ -58,7 +60,7 @@ class acceso_clientes extends fs_controller {
          portal_session_destroy();
       }
 
-      $this->template = 'public/login_clientes';
+      $this->template = 'public/pclientes_login';
       $this->username = '';
       $cliente = new \cliente();
       $cifnif = filter_input(INPUT_POST, 'username');

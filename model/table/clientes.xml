@@ -4,6 +4,11 @@
     Author     : Carlos Garcia Gomez
     Description:
         Estructura de la tabla clientes.
+        
+        Campo password: http://php.net/manual/es/function.password-hash.php
+            Hay que tener en cuenta que DEFAULT puede cambiar con el tiempo, 
+            por lo que debería prepararse para permitir que el almacenamento 
+            se amplíe a más de 60 caracteres (255 estaría bien)
 -->
 <tabla>
    <columna>
@@ -193,7 +198,7 @@
    </columna>
    <columna>
       <nombre>password</nombre>
-      <tipo>text</tipo>
+      <tipo>character varying(255)</tipo>
       <nulo>YES</nulo>
    </columna>
    <restriccion>

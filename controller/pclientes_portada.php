@@ -18,7 +18,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-class portada extends fs_controller {
+require_once 'plugins/portal_clientes/extras/fs_pclientes_controller.php';
+
+class pclientes_portada extends fs_pclientes_controller {
 
    public $page_description;
 
@@ -32,9 +34,9 @@ class portada extends fs_controller {
     * Código que se ejecutará en la parte pública
     */
    protected function public_core() {
-      start_portal_session();
-      
-      $this->template = 'public/portada';
+      parent::public_core();
+
+      $this->template = 'public/pclientes_portada';
    }
 
 }

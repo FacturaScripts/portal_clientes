@@ -13,7 +13,9 @@ require_model('factura_cliente.php');
  *
  * @author Francesc Pineda Segarra
  */
-class ver_facturas_venta extends fs_controller {
+require_once 'plugins/portal_clientes/extras/fs_pclientes_controller.php';
+
+class pclientes_ver_facturas extends fs_pclientes_controller {
 
    public $cliente;
    public $factura;
@@ -35,15 +37,15 @@ class ver_facturas_venta extends fs_controller {
 
       $this->resultado = FALSE;
       $this->template = FALSE;
-      
+
       if (filter_input(INPUT_GET, 'id')) {
          $this->generar_html();
       } if (filter_input(INPUT_GET, 'cod')) {
-         $this->template = 'extensions/facturas_venta_html';
+         $this->template = 'extensions/pclientes_facturas_venta_html';
 
          $cliente = new \cliente();
          $this->cliente = $cliente->get_by_cifnif($_SESSION['login_user']);
-         
+
          if (filter_input(INPUT_GET, 'cod') == $this->cliente->codcliente) {
             $fac0 = new factura_cliente();
             $this->resultado = $fac0->all_from_cliente($this->cliente->codcliente);
@@ -54,7 +56,7 @@ class ver_facturas_venta extends fs_controller {
          $this->new_error_msg('No puedes acceder a esta página directamente.');
       }
    }
-   
+
    /**
     * Código que se ejecutará en la parte privada
     */
@@ -72,7 +74,7 @@ class ver_facturas_venta extends fs_controller {
           array(
               'name' => __CLASS__,
               'page_from' => __CLASS__,
-              'page_to' => 'panel_cliente',
+              'page_to' => 'pclientes_panel',
               'type' => 'public_tab',
               'text' => '<span class="glyphicon glyphicon-list" aria-hidden="true"></span><span class="hidden-xs">&nbsp; Facturas</span>',
               'params' => ''
@@ -89,7 +91,7 @@ class ver_facturas_venta extends fs_controller {
       $templateName = "factura_venta";
       $templateFilePath = $basePath . $templateName . '.php';
       $nombre_documento = FS_FACTURA;
-      
+
       if (file_exists($templateFilePath)) {
          /* Por el momento no se pueden usar estas variables en este generador de plantillas */
          $debug = filter_has_var(INPUT_GET, 'debug') ? true : false;

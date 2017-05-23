@@ -18,7 +18,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-class portal_wizard extends fs_controller {
+require_once 'plugins/portal_clientes/extras/fs_pclientes_controller.php';
+
+class pclientes_wizard extends fs_controller {
 
    public function __construct() {
       parent::__construct(__CLASS__, 'Asistente portal clientes', 'Portal', FALSE, FALSE);
@@ -31,8 +33,8 @@ class portal_wizard extends fs_controller {
          $this->check_menu();
          /* Asignamos la página portada como página por defecto */
          $this->actualizar_config2();
-         
-         $URL = 'index.php?page=acceso_clientes';
+
+         $URL = 'index.php?page=pclientes_acceso';
          header('Location: ' . $URL);
       }
    }
@@ -60,13 +62,13 @@ class portal_wizard extends fs_controller {
 
       $this->load_menu(TRUE);
    }
-   
-      public function actualizar_config2() {
+
+   public function actualizar_config2() {
       //Configuramos la información básica para config2.ini
       $guardar = FALSE;
       $config2 = array();
       /* No hace falta indicarlas todas, sólo las diferentes */
-      $config2['homepage'] = "portada";
+      $config2['homepage'] = "pclientes_portada";
 
       foreach ($GLOBALS['config2'] as $i => $value) {
          if (isset($config2[$i])) {
