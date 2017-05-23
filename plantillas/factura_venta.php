@@ -6,7 +6,7 @@ $per0 = new cliente();
 
 /* Solo un cliente o un usuario de FS pueden ver las facturas*/
 if (!$this->user->nick) {
-   if ($documento->cifnif != $_SESSION['login_cliente']) {
+   if ($documento->codcliente != $_SESSION['login_cliente']) {
       die("No puedes ver las facturas de otros usuarios");
    }
 }
