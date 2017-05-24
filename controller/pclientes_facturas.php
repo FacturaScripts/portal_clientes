@@ -31,13 +31,20 @@ class pclientes_facturas extends portada_clientes {
    }
    
    protected function private_core() {
+      /**
+       * Al activar el plugin se ejecuta el private_core() de cada controlador,
+       * así que lo usamos para instalar las extensiones.
+       */
       $this->share_extensions();
    }
    
    protected function public_core() {
-      parent::public_core();
       $this->share_extensions();
-      $this->template = 'pclientes_public/facturas';
+      
+      /**
+       * El parent ya se encarga del login y de cargar las extensiones.
+       */
+      parent::public_core();
       
       /// obtenemos el listado de facturas aquí
    }
