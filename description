@@ -1,10 +1,6 @@
 Página para gestionar el acceso a clientes a un portal público.<br/>
-
 <ul>
-   <li>Permite a un usuario cliente acceder mediante CIF/NIF y contraseña.</li>
+   <li>Permite a un cliente acceder mediante CIF/NIF y contraseña.</li>
    <li>Permite ver las facturas en HTML.</li>
 </ul>
-
-<br/>
-<b>Accesible desde</b>: Portal -> Acceso clientes<br/>
-<b>Utiliza</b>: https://github.com/ircmaxell/password_compat
+<b>Accesible desde</b>: Ventas -&gt; Clientes -&gt; Portal web.
