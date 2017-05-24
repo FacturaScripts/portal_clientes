@@ -28,8 +28,12 @@ require_model('cliente_propiedad.php');
  */
 class portada_clientes extends fs_controller {
    
+   /**
+    * Almacena el nombre de la clase que hereda, la hija.
+    * @var type 
+    */
    public $class_name;
-   
+
    /**
     * Si el cliente ha hecho login, aquí estarán los datos del cliente.
     * @var type 
@@ -43,19 +47,21 @@ class portada_clientes extends fs_controller {
          $title = 'Portada clientes';
          $folder = 'admin';
       }
-      
+
       $this->class_name = $name;
       parent::__construct($name, $title, $folder, $admin, $shmenu, $important);
    }
 
    protected function public_core() {
       $this->login_cliente();
+      $this->cargar_extensiones();
    }
 
    protected function login_cliente() {
       $cli0 = new cliente();
       $cprop = new cliente_propiedad();
-
+      
+      $this->cliente = FALSE;
       $login_ok = FALSE;
       if (isset($_POST['user_cli']) AND isset($_POST['pass_cli'])) {
          /**
@@ -71,9 +77,9 @@ class portada_clientes extends fs_controller {
                 * Usamos logkey para que el cliente lo guarde en cookie y comparar.
                 */
                $propiedades['logkey'] = $this->random_string(30);
-               if( $cprop->array_save($cliente->codcliente, $propiedades) ) {
-                  setcookie('user_cli', $cliente->codcliente, time()+FS_COOKIES_EXPIRE);
-                  setcookie('logkey_cli', $propiedades['logkey'], time()+FS_COOKIES_EXPIRE);
+               if ($cprop->array_save($cliente->codcliente, $propiedades)) {
+                  setcookie('user_cli', $cliente->codcliente, time() + FS_COOKIES_EXPIRE);
+                  setcookie('logkey_cli', $propiedades['logkey'], time() + FS_COOKIES_EXPIRE);
                   $this->new_message('Sesión iniciada correctamente.');
                }
             } else {
@@ -82,9 +88,9 @@ class portada_clientes extends fs_controller {
          } else {
             $this->new_error_msg('Cliente no encontrado.');
          }
-      } else if( isset($_GET['logout_cli']) ) {
+      } else if (isset($_GET['logout_cli'])) {
          $this->logout_cli();
-      } else if( isset($_COOKIE['user_cli']) AND isset($_COOKIE['logkey_cli']) ) {
+      } else if (isset($_COOKIE['user_cli']) AND isset($_COOKIE['logkey_cli'])) {
          /**
           * Usamos user_cli (codcliente) y logkey para identificar al usuario y saber si ha
           * iniciado sesión en este ordenador.
@@ -98,28 +104,37 @@ class portada_clientes extends fs_controller {
             }
          }
       }
-      
-      if($login_ok) {
-         $this->template = 'pclientes_public/'.$this->class_name;
-         $this->cargar_extensiones();
+
+      if ($login_ok) {
+         /**
+          * Por defecto usamos una vista con el mismo nombre que el controlador.
+          */
+         $this->template = 'pclientes_public/' . $this->class_name;
+      } else {
+         /**
+          * En este punto se puede utilizar otra página de login, en función
+          * de qué es lo que queremos mostrar a los clientes que no han hecho
+          * login.
+          */
+         $this->template = 'login/default';
       }
    }
-   
+
    private function logout_cli() {
-      $this->cliente = FALSE;
-      $this->template = 'login/default';
-      
-      setcookie('user_cli', '', time()-FS_COOKIES_EXPIRE);
-      setcookie('logkey_cli', '', time()-FS_COOKIES_EXPIRE);
+      setcookie('user_cli', '', time() - FS_COOKIES_EXPIRE);
+      setcookie('logkey_cli', '', time() - FS_COOKIES_EXPIRE);
       $this->new_message('Sesión cerrada correctamente.');
    }
-   
+
    private function cargar_extensiones() {
       $this->extensions = array();
       
+      /**
+       * Cargamos las extensiones generales (to = NULL) y las que son para este controlador.
+       */
       $fsext = new fs_extension();
-      foreach($fsext->all() as $ext) {
-         if( in_array($ext->to, array(NULL, $this->class_name)) ) {
+      foreach ($fsext->all() as $ext) {
+         if (in_array($ext->to, array(NULL, $this->class_name))) {
             $this->extensions[] = $ext;
          }
       }
