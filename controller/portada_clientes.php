@@ -100,7 +100,7 @@ class portada_clientes extends fs_controller {
       }
       
       if($login_ok) {
-         $this->template = 'pclientes_public/'.__CLASS__;
+         $this->template = 'pclientes_public/'.$this->class_name;
          $this->cargar_extensiones();
       }
    }

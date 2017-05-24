@@ -18,7 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-require_once __DIR__.'/portada_clientes.php';
+require_once __DIR__ . '/portada_clientes.php';
+require_model('factura_cliente.php');
 
 /**
  * Description of pclientes_facturas
@@ -26,10 +27,14 @@ require_once __DIR__.'/portada_clientes.php';
  * @author Carlos García Gómez
  */
 class pclientes_facturas extends portada_clientes {
+
+   public $offset;
+   public $resultados;
+
    public function __construct() {
       parent::__construct(__CLASS__);
    }
-   
+
    protected function private_core() {
       /**
        * Al activar el plugin se ejecuta el private_core() de cada controlador,
@@ -37,18 +42,19 @@ class pclientes_facturas extends portada_clientes {
        */
       $this->share_extensions();
    }
-   
+
    protected function public_core() {
       $this->share_extensions();
-      
+
       /**
        * El parent ya se encarga del login y de cargar las extensiones.
        */
       parent::public_core();
-      
+
       /// obtenemos el listado de facturas aquí
+      $this->buscar();
    }
-   
+
    private function share_extensions() {
       $fsext = new fs_extension();
       $fsext->name = 'seccion_facturas';
@@ -58,4 +64,14 @@ class pclientes_facturas extends portada_clientes {
       $fsext->text = 'Facturas';
       $fsext->save();
    }
+
+   private function buscar() {
+      if ($this->cliente) {
+         $fact0 = new factura_cliente();
+         $this->resultados = $fact0->all_from_cliente($this->cliente->codcliente);
+      } else {
+         $this->resultados = array();
+      }
+   }
+
 }
