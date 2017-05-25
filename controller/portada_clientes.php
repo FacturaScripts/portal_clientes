@@ -54,7 +54,6 @@ class portada_clientes extends fs_controller {
 
    protected function public_core() {
       $this->login_cliente();
-      $this->cargar_extensiones();
    }
 
    protected function login_cliente() {
@@ -116,7 +115,7 @@ class portada_clientes extends fs_controller {
           * de qué es lo que queremos mostrar a los clientes que no han hecho
           * login.
           */
-         $this->template = 'login/default';
+         $this->template = 'pclientes_public/portada';
       }
    }
 
@@ -124,20 +123,6 @@ class portada_clientes extends fs_controller {
       setcookie('user_cli', '', time() - FS_COOKIES_EXPIRE);
       setcookie('logkey_cli', '', time() - FS_COOKIES_EXPIRE);
       $this->new_message('Sesión cerrada correctamente.');
-   }
-
-   private function cargar_extensiones() {
-      $this->extensions = array();
-      
-      /**
-       * Cargamos las extensiones generales (to = NULL) y las que son para este controlador.
-       */
-      $fsext = new fs_extension();
-      foreach ($fsext->all() as $ext) {
-         if (in_array($ext->to, array(NULL, $this->class_name))) {
-            $this->extensions[] = $ext;
-         }
-      }
    }
 
 }

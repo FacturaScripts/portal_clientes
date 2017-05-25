@@ -22,7 +22,7 @@
                {loop="$fsc->resultados"}
                <tr{if="$value->pagada"} class='success'{/if}>
                   <td>
-                     <a href="#">{$value->codigo}</a> {$value->numero2}
+                     <a href="{$fsc->url()}&id={$value->idfactura}">{$value->codigo}</a> {$value->numero2}
                   </td>
                   <td>{$value->observaciones_resume()}</td>
                   <td class="text-right">{$fsc->show_precio($value->neto, $value->coddivisa)}</td>
