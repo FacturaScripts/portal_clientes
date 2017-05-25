@@ -1,0 +1,64 @@
+{include="header2"}
+
+<br/>
+<div class="container-fluid">
+   <div class="row">
+      <div class="col-sm-12">
+         <div class="panel panel-info">
+            <div class="panel-heading">
+               <h3 class="panel-title">Ayuda</h3>
+            </div>
+            <div class="panel-body">
+               <p class="help-block">
+                  Ahora FacturaScripts está configurado con una vista especial para clientes.
+                  Puedes ver aquí el listado completo de clientes con acceso. Y puedes <b>conceder</b>,
+                  <b>quitar acceso</b> o <b>cambiar la contraseña</b> en la nueva sección portal web
+                  que ahora tiene cada ficha de cliente. Es decir, busca un cliente en la pestaña
+                  resultados, haz clic y verás que tiene una sección portal web. Ahí puedes modificar
+                  los datos de acceso.
+               </p>
+            </div>
+         </div>
+         <div class="table-responsive">
+         <table class="table table-hover">
+            <thead>
+               <tr>
+                  <th class="text-left">Código + Nombre</th>
+                  <th class="text-left">{#FS_CIFNIF#}</th>
+                  <th class="text-left">email</th>
+                  <th class="text-left">Teléfono</th>
+                  <th class="text-left">Observaciones</th>
+               </tr>
+            </thead>
+            {loop="$fsc->resultados"}
+               <tr class='clickableRow{if="$value->debaja"} danger{elseif="$value->fechaalta==$fsc->today()"} success{/if}' href='{$value->url()}'>
+                  <td>
+                     <a href="{$value->url()}">{$value->codcliente}</a> {$value->nombre}
+                     {if="$value->nombre!=$value->razonsocial"}
+                     <span class="label label-default">{$value->razonsocial}</span>
+                     {/if}
+                     {if="$value->debaja"}
+                     &nbsp; <span class="label label-danger hidden-sm" title="cliente dado de baja">Baja</span>
+                     {elseif="$value->fechaalta==$fsc->today()"}
+                     &nbsp; <span class="label label-success hidden-sm" title="Nuevo cliente">Nuevo</span>
+                     {/if}
+                  </td>
+                  <td>{$value->cifnif}</td>
+                  <td>{$value->email}</td>
+                  <td>
+                     {if="$value->telefono1"}{$value->telefono1}{elseif="$value->telefono2"}{$value->telefono2}{/if}
+                  </td>
+                  <td>{$value->observaciones_resume()}</td>
+               </tr>
+            {else}
+               <tr class="warning">
+                  <td colspan="5">Ningún cliente encontrado.</td>
+               </tr>
+            {/loop}
+         </table>
+      </div>
+      </div>
+   </div>
+</div>
+
+{include="footer2"}

@@ -1,0 +1,85 @@
+{include="pclientes_public/header"}
+
+<div class="container-fluid">
+   <div class="row">
+      <div class="col-sm-12">
+         <div class="page-header">
+            <h1>Bienvenido a {$fsc->empresa->nombre}</h1>
+         </div>
+      </div>
+   </div>
+   <div class="row">
+      <div class="col-sm-10">
+         <div class="well">
+            <p class="help-block">
+               Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+               Suspendisse lacinia imperdiet scelerisque. Class aptent taciti
+               sociosqu ad litora torquent per conubia nostra, per inceptos
+               himenaeos. Morbi sit amet magna tincidunt, tempus arcu sit amet,
+               aliquet quam. Mauris id sapien id urna iaculis tincidunt.
+               Suspendisse tempus porta dui sed volutpat. Cras porta tincidunt
+               dolor, vel viverra risus commodo et. Suspendisse aliquet feugiat
+               diam, a finibus quam maximus eget. Pellentesque laoreet nec dui
+               sed tempor. Sed varius diam in orci elementum, eu mattis lorem
+               suscipit. Proin mollis aliquet neque nec consectetur. Nullam eu
+               condimentum ligula. Praesent dictum ullamcorper justo, et tempus
+               est lobortis nec. Vestibulum sagittis augue a aliquet elementum.
+               Aliquam sed mi quis tortor faucibus pretium ac eget nulla.
+
+               Nulla gravida blandit mi sit amet commodo. Nunc in dapibus est,
+               nec gravida sem. Pellentesque pulvinar pharetra ipsum, vel
+               elementum odio posuere tristique. Sed cursus sit amet risus sed
+               cursus. Praesent ut vestibulum mauris, interdum dignissim eros.
+               Duis auctor ipsum eget venenatis facilisis. Donec augue ante,
+               consectetur eu rhoncus eu, aliquam vitae mi. Nunc ac malesuada
+               urna. Duis lacinia convallis ultricies. Sed volutpat vestibulum
+               ex non faucibus. Fusce mollis luctus tortor, sed venenatis turpis.
+               Maecenas nec finibus sem.
+
+               Donec in metus pellentesque, lacinia enim et, ullamcorper metus.
+               Etiam nec orci et velit fringilla scelerisque. Quisque pellentesque
+               vel velit id interdum. Phasellus ultrices feugiat lectus, non placerat
+               lectus posuere in. Phasellus ultrices aliquam turpis quis volutpat.
+               Phasellus mauris mauris, rutrum et justo quis, egestas tincidunt odio.
+               Morbi tristique, est in finibus laoreet, libero leo fermentum purus,
+               quis cursus urna diam nec mauris.
+
+               Nullam nec congue sapien. Vivamus erat enim, sollicitudin id sem in,
+               molestie tincidunt quam. Proin et cursus ex, et lacinia enim. Fusce
+               tempor pharetra mi vel facilisis. Maecenas euismod sem risus, sit
+               amet dictum nulla pulvinar eu. Donec vehicula ut mi a aliquam. Nulla
+               at molestie lacus. In eget luctus ante, sed auctor tortor. Aenean
+               accumsan ac lacus at suscipit. Cras sed nunc vel metus tempor
+               consequat id eget nunc. Nullam et bibendum enim. In sed orci vel
+               libero rutrum consectetur quis ut quam. Praesent dapibus varius odio,
+               in lobortis felis. Aliquam ut sodales eros, id cursus sem. Praesent
+               porta lectus sed consequat faucibus. Cras imperdiet congue tincidunt.
+
+               Pellentesque aliquet varius lectus, sed mollis mauris posuere quis.
+               Duis malesuada, magna at iaculis semper, elit dolor tempus sem, in
+               rhoncus ipsum nisl non nunc. Maecenas vitae quam id nulla sagittis
+               condimentum non quis mauris. Aenean fermentum, nisi vitae consequat
+               facilisis, dui massa imperdiet felis, nec consectetur augue dui ac
+               elit. Nullam accumsan, odio et pulvinar fringilla, leo nunc scelerisque
+               ligula, a venenatis ex orci at ante. Etiam leo velit, vehicula vel est
+               in, lobortis venenatis nulla. Morbi consectetur purus mauris, aliquet
+               efficitur turpis ornare quis. Morbi dapibus lobortis pharetra. Donec
+               eu odio sit amet sem rutrum rhoncus non sit amet enim.
+            </p>
+         </div>
+      </div>
+      <div class="col-sm-2">
+         <div class="thumbnail hidden-xs">
+            {if="file_exists(FS_MYDOCS.'images/logo.png')"}
+            <img src="images/logo.png" alt="{$fsc->empresa->nombre}"/>
+            {elseif="file_exists(FS_MYDOCS.'images/logo.jpg')"}
+            <img src="images/logo.jpg" alt="{$fsc->empresa->nombre}"/>
+            {else}
+            <img src="{#FS_PATH#}view/img/logo.png" alt="logo"/>
+            {/if}
+         </div>
+      </div>
+   </div>
+</div>
+
+{include="pclientes_public/footer"}

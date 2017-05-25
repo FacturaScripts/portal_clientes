@@ -1,0 +1,62 @@
+{include="header2"}
+
+<div class="container-fluid">
+   <div class="row">
+      <div class="col-sm-12">
+         {if="!isset($fsc->cliente_propiedades['password'])"}
+         <div class="panel panel-warning">
+            <div class="panel-body">
+               <p class="help-block">
+                  El cliente no tiene contraseña de acceso. Escribe una si quieres que
+                  pueda acceder al portal.
+               </p>
+            </div>
+         </div>
+         {else}
+         <div class="panel panel-success">
+            <div class="panel-body">
+               <p class="help-block">
+                  El cliente ya tiene contraseña y puede acceder al portal. Para acceder debe usar el
+                  código <b>{$fsc->cliente->codcliente}</b> y la contraseña.
+               </p>
+               <a href="#" class="btn btn-xs btn-default" onclick="alert('no implementado.')">
+                  <span class="glyphicon glyphicon-envelope"></span>&nbsp; Enviar datos por email
+               </a>
+               <a href="{$fsc->url()}&cod={$fsc->cliente->codcliente}&quitar=TRUE" class="btn btn-xs btn-danger">
+                  <span class="glyphicon glyphicon-lock"></span>&nbsp; Quitar acceso
+               </a>
+            </div>
+         </div>
+         {/if}
+      </div>
+   </div>
+   <form action="{$fsc->url()}" method="post" class="form">
+      <input type='hidden' name="cod" value="{$fsc->cliente->codcliente}"/>
+      <div class="panel panel-info">
+         <div class="panel-body">
+            <div class="row">
+               <div class="col-sm-4">
+                  <div class="form-group">
+                     Código:
+                     <div class="form-control">{$fsc->cliente->codcliente}</div>
+                  </div>
+               </div>
+               <div class="col-sm-4">
+                  <div class="form-group">
+                     Contraseña de acceso:
+                     <input type="password" name="pass_cli" value="" class="form-control" maxlength="32"/>
+                  </div>
+               </div>
+               <div class="col-sm-4">
+                  <br/>
+                  <button type="submit" class="btn btn-sm btn-primary">
+                     <span class="glyphicon glyphicon-floppy-disk"></span>&nbsp; Guardar
+                  </button>
+               </div>
+            </div>
+         </div>
+      </div>
+   </form>
+</div>
+
+{include="footer2"}

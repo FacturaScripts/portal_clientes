@@ -1,0 +1,43 @@
+{include="pclientes_public/header"}
+
+<div class="container-fluid">
+   <div class="row">
+      <div class="col-sm-12">
+         <div class="page-header">
+            <h1>
+               <i class="fa fa-copy" aria-hidden="true"></i> Tus facturas
+            </h1>
+         </div>
+         <div class="table-responsive">
+            <table class="table table-hover">
+               <thead>
+                  <tr>
+                     <th>Código</th>
+                     <th>Observaciones</th>
+                     <th class="text-right">Neto</th>
+                     <th class="text-right">Total</th>
+                     <th class="text-right">Fecha</th>
+                  </tr>
+               </thead>
+               {loop="$fsc->resultados"}
+               <tr{if="$value->pagada"} class='success'{/if}>
+                  <td>
+                     <a href="{$fsc->url()}&id={$value->idfactura}">{$value->codigo}</a> {$value->numero2}
+                  </td>
+                  <td>{$value->observaciones_resume()}</td>
+                  <td class="text-right">{$fsc->show_precio($value->neto, $value->coddivisa)}</td>
+                  <td class="text-right">{$fsc->show_precio($value->total, $value->coddivisa)}</td>
+                  <td class="text-right">{$value->fecha}</td>
+               </tr>
+               {else}
+               <tr class="warning">
+                  <td colspan="5">Sin resultados.</td>
+               </tr>
+               {/loop}
+            </table>
+         </div>
+      </div>
+   </div>
+</div>
+
+{include="pclientes_public/footer"}

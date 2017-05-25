@@ -1,0 +1,46 @@
+{include="pclientes_public/header"}
+
+<div class="container-fluid">
+   <div class="row">
+      <div class="col-sm-12">
+         <a href="{$fsc->url()}" class="btn btn-xs btn-default">
+            <i class="fa fa-arrow-left" aria-hidden="true"></i> Todas
+         </a>
+         <div class="page-header">
+            <h1>Factura {$fsc->factura->codigo}</h1>
+         </div>
+      </div>
+   </div>
+   <div class="row">
+      <div class="col-sm-12">
+         <div class="table-responsive">
+            <table class="table table-hover">
+               <thead>
+                  <th>Referencia + Descripción</th>
+                  <th class="text-right">Cantidad</th>
+                  <th class="text-right">Precio</th>
+                  <th class="text-right">Dto.</th>
+                  <th class="text-right">Neto</th>
+                  <th class="text-right">{#FS_IVA#}</th>
+               </thead>
+               {loop="$fsc->factura->get_lineas()"}
+               <tr>
+                  <td>
+                     <b>{$value->referencia}</b> {$value->descripcion}
+                  </td>
+                  <td class="text-right">{$fsc->show_numero($value->cantidad)}</td>
+                  <td class="text-right">{$fsc->show_precio($value->pvpunitario)}</td>
+                  <td class="text-right">
+                     {if="$value->dtopor"}{$fsc->show_numero($value->dtopor)}{/if}
+                  </td>
+                  <td class="text-right">{$fsc->show_precio($value->pvptotal)}</td>
+                  <td class="text-right">{$fsc->show_numero($value->iva)} %</td>
+               </tr>
+               {/loop}
+            </table>
+         </div>
+      </div>
+   </div>
+</div>
+
+{include="pclientes_public/footer"}
