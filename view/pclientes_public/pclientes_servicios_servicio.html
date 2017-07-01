@@ -7,12 +7,40 @@
             <i class="fa fa-arrow-left" aria-hidden="true"></i> Todas
          </a>
          <div class="page-header">
-            <h1>Factura {$fsc->factura->codigo}</h1>
+            <h1>Servicio N° {$fsc->servicio->codigo}</h1>
          </div>
       </div>
    </div>
    <div class="row">
+        <div class="col-sm-12">
+            <h4>Detalles de este Servicio:</h4>
+
+               <div class="table-responsive">
+            <table class="table table-hover">
+               <thead>
+                  <tr>
+                     <th class="text-left">Usuario</th>
+                     <th class="text-left">Detalle</th>
+                     <th class="text-right">Fecha | Hora &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                     <th></th>
+                  </tr>
+               </thead>
+               {loop="fsc->listar_servicio_detalle()"}
+               <tr>
+                  <td>{$value->nick}</td>
+                  <td>{$value->descripcion}</td>
+                  <td class="text-right">{$value->fecha} | {$value->show_hora_detalle()}</td>
+               
+               </tr>
+               {/loop}
+            </table>
+         </div>
+
+        </div>
+   </div>
+   <div class="row">
       <div class="col-sm-12">
+          <h4>Productos en este Servicio</h4>
          <div class="table-responsive">
             <table class="table table-hover">
                <thead>
@@ -23,7 +51,7 @@
                   <th class="text-right">Neto</th>
                   <th class="text-right">{#FS_IVA#}</th>
                </thead>
-               {loop="$fsc->factura->get_lineas()"}
+               {loop="$fsc->servicio->get_lineas()"}
                <tr>
                   <td>
                      <b>{$value->referencia}</b> {$value->descripcion}

@@ -20,6 +20,7 @@
 
 require_once __DIR__ . '/portada_clientes.php';
 require_model('servicio_cliente.php');
+require_model('detalle_servicio.php');
 
 
 /**
@@ -57,7 +58,7 @@ class pclientes_servicios extends portada_clientes {
       if (!$this->cliente) {
          $this->new_error_msg('Debes iniciar sesión para acceder a esta página.');
       } else if (isset($_GET['id'])) {
-        // $this->cargar_factura($_GET['id']);
+         $this->cargar_servicio($_GET['id']);
       } else {
          /// obtenemos el listado de servicios aquí
        $this->buscar();
@@ -76,13 +77,13 @@ class pclientes_servicios extends portada_clientes {
    private function cargar_servicio ($id) {
 
        
-       $ser0 = new servicio_cliente();
+      $ser0 = new servicio_cliente();
       $this->servicio = FALSE;
 
       $servicio = $ser0->get($id);
       if ($servicio) {
          if ($servicio->codcliente == $this->cliente->codcliente) {
-            $this->factura = $factura;
+            $this->servicio = $servicio;
             $this->template = 'pclientes_public/pclientes_servicios_servicio';
          } else {
             $this->new_error_msg('No tienes permiso para ver esta factura.');
@@ -92,8 +93,10 @@ class pclientes_servicios extends portada_clientes {
       }
    }
  
-
-
+public function listar_servicio_detalle() {
+      $detalle = new detalle_servicio();
+      return $detalle->all_from_servicio($this->servicio->idservicio);
+   }
 
 
    private function share_extensions() {
