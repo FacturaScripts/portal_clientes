@@ -91,7 +91,7 @@ class pclientes_servicios extends portada_clientes {
          $this->new_error_msg('Factura no encontrada.');
       }
    }
- }
+ 
 
 
 
