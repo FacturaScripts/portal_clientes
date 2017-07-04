@@ -1,0 +1,93 @@
+{include="pclientes_public/header"}
+
+<div class="container-fluid">
+   <div class="row">
+      <div class="col-sm-12">
+         <a href="{$fsc->url()}" class="btn btn-xs btn-default">
+            <i class="fa fa-arrow-left" aria-hidden="true"></i> Todas
+         </a>
+         <div class="page-header">
+            <h1>Servicio N° {$fsc->servicio->codigo}</h1>
+         </div>
+      </div>
+   </div>
+   <div class="row">
+        <div class="col-sm-12">
+            <h4>Detalles de este Servicio:</h4>
+
+               <div class="table-responsive">
+            <table class="table table-hover">
+               <thead>
+                  <tr>
+                     <th class="text-left">Usuario</th>
+                     <th class="text-left">Detalle</th>
+                     <th class="text-right">Fecha | Hora &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                     <th></th>
+                  </tr>
+               </thead>
+               {if condition="$fsc->listar_servicio_detalle()"}
+                {loop="$fsc->listar_servicio_detalle()"}
+                <tr>
+                    <td>{$value->nick}</td>
+                    <td>{$value->descripcion}</td>
+                    <td class="text-right">{$value->fecha} | {$value->show_hora_detalle()}</td>               
+                </tr>
+                {/loop}
+                    {else}
+                        <tr class="danger">
+                        <td colspan="7" class="text-center">No tiene detalles este serivicio<td>
+                        </tr>
+			 {/if}
+            </table>
+         </div>
+
+        </div>
+   </div>
+   <div class="row">
+      <div class="col-sm-12">
+          <h4>Productos en este Servicio</h4>
+         <div class="table-responsive">
+            <table class="table table-hover">
+               <thead>
+                  <th>Referencia + Descripción</th>
+                  <th class="text-right">Cantidad</th>
+                  <th class="text-right">Precio</th>
+                  <th class="text-right">Dto.</th>
+                  <th class="text-right">Neto</th>
+                  <th class="text-right">{#FS_IVA#}</th>
+                  <th class="text-right">Total</th>
+               </thead>
+            {if condition="$fsc->servicio->get_lineas()"}
+                {loop="$fsc->servicio->get_lineas()"}
+                <tr>
+                    <td>
+                        <b>{$value->referencia}</b> {$value->descripcion}
+                    </td>
+                    <td class="text-right">{$fsc->show_numero($value->cantidad)}</td>
+                    <td class="text-right">{$fsc->show_precio($value->pvpunitario)}</td>
+                    <td class="text-right">
+                        {if="$value->dtopor"}{$fsc->show_numero($value->dtopor)}{/if}
+                    </td>
+                    <td class="text-right">{$fsc->show_precio($value->pvptotal)}</td>
+                    <td class="text-right">{$fsc->show_numero($value->iva)} %</td>
+                    <td class="text-right">{$fsc->show_precio($value->total_iva())} </td>
+                </tr>
+                {/loop}
+                <tr>
+                  <td colspan="4"></td>
+                  <td class="text-right"><b>{$fsc->show_precio($fsc->servicio->neto, $fsc->servicio->coddivisa)}</b></td>
+                  <td class="text-right"><b>{$fsc->show_precio($fsc->servicio->totaliva, $fsc->servicio->coddivisa)}</b></td>
+                  <td class="text-right"><b>{$fsc->show_precio($fsc->servicio->total, $fsc->servicio->coddivisa)}</b></td>
+               </tr>
+                    {else}
+                            <tr class="danger">
+                            <td colspan="7" class="text-center">No tiene lineas este serivicio<td>
+                            </tr>
+			 {/if}
+            </table>
+         </div>
+      </div>
+   </div>
+</div>
+
+{include="pclientes_public/footer"}
